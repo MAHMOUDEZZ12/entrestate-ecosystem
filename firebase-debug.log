@@ -1,0 +1,65 @@
+[debug] [2025-10-15T13:16:00.985Z] ----------------------------------------------------------------------
+[debug] [2025-10-15T13:16:00.989Z] Command:       /nix/store/ws50yvm6vzlzf7jzz6n7xh4szddrack1-nodejs-20.19.1/bin/node /home/user/.global_modules/bin/firebase deploy --only hosting
+[debug] [2025-10-15T13:16:00.990Z] CLI Version:   14.19.1
+[debug] [2025-10-15T13:16:00.990Z] Platform:      linux
+[debug] [2025-10-15T13:16:00.990Z] Node Version:  v20.19.1
+[debug] [2025-10-15T13:16:00.991Z] Time:          Wed Oct 15 2025 13:16:00 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-10-15T13:16:00.991Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-15T13:16:01.554Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:01.554Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:01.559Z] >>> [apiv2][query] GET https://monospace-pa.googleapis.com/v1/workspaces/entrestate-46617573 [none]
+[debug] [2025-10-15T13:16:02.403Z] <<< [apiv2][status] GET https://monospace-pa.googleapis.com/v1/workspaces/entrestate-46617573 200
+[debug] [2025-10-15T13:16:02.407Z] <<< [apiv2][body] GET https://monospace-pa.googleapis.com/v1/workspaces/entrestate-46617573 {"workspaceId":"entrestate-46617573","name":"Entrestate","workspaceRedirectUrl":"firebase-entrestate-1760532393842.cluster-utvmpwb6ojhlcsay7va6s7qkck.cloudworkstations.dev","status":"WORKSPACE_STATUS_RUNNING","lastAccessDatetime":"2025-10-15T13:15:02.169161Z","workspaceTemplate":"WORKSPACE_TEMPLATE_BLANK_WEB","owner":"SELF","serviceAccountEmail":"msp-8945103907050689997@monospace-per-ws-sa-10.iam.gserviceaccount.com","enableNix":true,"ownerEmail":"ezz@entrestate.com","workspaceImageUrl":"https://www.gstatic.com/monospace/250314/workspace-blank-192.png","templateArgs":"{}","templateRepoUrl":"file:///usr/local/monospace/templates/public/blank-nix","workstationAccessToken":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Nsb3VkLmdvb2dsZS5jb20vd29ya3N0YXRpb25zIiwiYXVkIjoiZmlyZWJhc2UtZW50cmVzdGF0ZS0xNzYwNTMyMzkzODQyLmNsdXN0ZXItdXR2bXB3YjZvamhsY3NheTd2YTZzN3FrY2suY2xvdWR3b3Jrc3RhdGlvbnMuZGV2IiwiaWF0IjoxNzYwNTM0MTYyLCJleHAiOjE3NjA2MjA1NjJ9.Vaa4Lt-miTE6OArksrhNJ7EHtCk3hH7uUfd45vRXguiPEkGpvCtAqMRfPN291DWZuGuQQ74xMtS0tVQsVfPIdb9RTYw7r1r6UHy5NPQExqKzB4jtvzIE8l8VW3PlSR2WrNG9ZDdjCZlFiJIsE52p2QcW2BKaaiJYJDcwT90HlBqeCgOF12gXcH02upan2hSKC8PVuzyhZ0dX9llf6RLH4QCqP-cLKGZSnHZOFIjUPzgnhFh16bTasRBd1qW3B9vmRElBNcg5BnuTw19VjN1zmJFiGe_MNmUs8REbXxZWkoUb5M9fo6E7OkRMHqvfhdiWd7MK9hyHXc_m5pO61WinZQ","firebaseProjectId":"entrestate-ecosystem"}
+[debug] [2025-10-15T13:16:02.412Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-15T13:16:02.414Z] > authorizing via signed-in user (ezz@entrestate.com)
+[debug] [2025-10-15T13:16:02.414Z] [iam] checking project entrestate-ecosystem for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-10-15T13:16:02.415Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:02.415Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:02.415Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/entrestate-ecosystem:testIamPermissions [none]
+[debug] [2025-10-15T13:16:02.415Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/entrestate-ecosystem:testIamPermissions x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-15T13:16:02.415Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/entrestate-ecosystem:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-10-15T13:16:03.085Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/entrestate-ecosystem:testIamPermissions 200
+[debug] [2025-10-15T13:16:03.085Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/entrestate-ecosystem:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-10-15T13:16:03.087Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:03.088Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:03.088Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/entrestate-ecosystem [none]
+[debug] [2025-10-15T13:16:03.365Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/entrestate-ecosystem 200
+[debug] [2025-10-15T13:16:03.366Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/entrestate-ecosystem {"projectId":"entrestate-ecosystem","projectNumber":"180754566225","displayName":"entrestate-ecosystem","name":"projects/entrestate-ecosystem","resources":{"hostingSite":"entrestate-ecosystem"},"state":"ACTIVE","etag":"1_ea15c242-264c-4d84-b0d9-cc2db5b17a54"}
+[debug] [2025-10-15T13:16:10.023Z] defaultcredentials: writing to file /home/user/.config/firebase/ezz_entrestate_com_application_default_credentials.json
+[debug] [2025-10-15T13:16:10.032Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:10.032Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:10.035Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites pageToken=&pageSize=10
+[debug] [2025-10-15T13:16:10.936Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites 200
+[debug] [2025-10-15T13:16:10.936Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites {"sites":[{"name":"projects/entrestate-ecosystem/sites/entrestate-ecosystem","defaultUrl":"https://entrestate-ecosystem.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-10-15T13:16:10.938Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:10.938Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:10.938Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites 
+[debug] [2025-10-15T13:16:11.167Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites 200
+[debug] [2025-10-15T13:16:11.167Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites {"sites":[{"name":"projects/entrestate-ecosystem/sites/entrestate-ecosystem","defaultUrl":"https://entrestate-ecosystem.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-10-15T13:16:11.168Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:11.170Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:11.170Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/entrestate-ecosystem/webApps/-/config [none]
+[debug] [2025-10-15T13:16:11.681Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/entrestate-ecosystem/webApps/-/config 200
+[debug] [2025-10-15T13:16:11.681Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/entrestate-ecosystem/webApps/-/config {"projectId":"entrestate-ecosystem","storageBucket":"entrestate-ecosystem.firebasestorage.app","apiKey":"AIzaSyD2LOXvIHxUJ1PORv5FLcX5dFLUbR-Bb4I","authDomain":"entrestate-ecosystem.firebaseapp.com","messagingSenderId":"180754566225","projectNumber":"180754566225","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2025-10-15T13:16:26.490Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:26.492Z] Checked if tokens are valid: true, expires at: 1760537484292
+[debug] [2025-10-15T13:16:26.492Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites/entrestate-ecosystem [none]
+[debug] [2025-10-15T13:16:27.263Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites/entrestate-ecosystem 200
+[debug] [2025-10-15T13:16:27.265Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/entrestate-ecosystem/sites/entrestate-ecosystem {"name":"projects/entrestate-ecosystem/sites/entrestate-ecosystem","defaultUrl":"https://entrestate-ecosystem.web.app","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 15.5.4
+
+
+[info]    Creating an optimized production build ...
+

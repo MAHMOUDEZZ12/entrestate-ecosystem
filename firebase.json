@@ -6,12 +6,9 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "nextServer"
-      }
-    ]
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
   },
   "functions": {
     "source": "functions"
