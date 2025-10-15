@@ -15,6 +15,8 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { getNews } from '@/lib/api-helpers';
+import { Market } from '@/types';
 import {z} from 'genkit';
 
 /**
@@ -22,6 +24,7 @@ import {z} from 'genkit';
  */
 export const GetMarketTrendsInputSchema = z.object({
   topic: z.string().describe('The real estate topic to analyze (e.g., "Dubai rental yields").'),
+  market: z.object({ name: z.string() }).describe("The market to analyze."),
 });
 export type GetMarketTrendsInput = z.infer<typeof GetMarketTrendsInputSchema>;
 
@@ -54,6 +57,8 @@ export const GetMarketTrendsOutputSchema = z.object({
       impact: z.string().describe("The potential impact of implementing this suggestion."),
   })).describe("A list of 2-3 optimization suggestions."),
   forecastData: z.array(ForecastDataPointSchema).describe("A 6-month time-series forecast for the topic, including confidence intervals."),
+  newsSummary: z.string().describe("A summary of the latest news about the market."),
+  newsSentiment: z.string().describe("The sentiment of the news (positive, negative, or neutral)."),
 });
 export type GetMarketTrendsOutput = z.infer<typeof GetMarketTrendsOutputSchema>;
 
@@ -71,15 +76,23 @@ export async function getMarketTrends(
 
 const prompt = ai.definePrompt({
   name: 'getMarketTrendsPrompt',
-  input: {schema: GetMarketTrendsInputSchema},
+  input: {schema: z.object({
+    topic: z.string(),
+    newsSummary: z.string(),
+    newsSentiment: z.string(),
+  })},
   output: {schema: GetMarketTrendsOutputSchema},
-  prompt: `You are an expert real estate market analyst and forecasting agent, combining the skills of an LLM Auditor, an Optimizer, and a Data Scientist. Your task is to provide a comprehensive market intelligence report based on the provided topic, using simulated data from sources like Property Finder Insights Hub, Bayut, and DLD.
+  prompt: `You are an expert real estate market analyst and forecasting agent, combining the skills of an LLM Auditor, an Optimizer, and a Data Scientist. Your task is to provide a comprehensive market intelligence report based on the provided topic, using simulated data from sources like Property Finder Insights Hub, Bayut, and DLD, and real-time news analysis.
 
   **Topic:** {{{topic}}}
 
+  **Recent News Summary & Sentiment:**
+  Sentiment: {{{newsSentiment}}}
+  Summary: {{{newsSummary}}}
+
   **Instructions:**
 
-  1.  **Synthesize Information & Determine Sentiment:** Based on the topic, provide a high-level summary of the market sentiment (e.g., "Optimistic," "Cautious").
+  1.  **Synthesize Information & Determine Sentiment:** Based on the topic and the latest news, provide a high-level summary of the market sentiment (e.g., "Optimistic," "Cautious").
   2.  **Identify Key Emerging Trends:** List 2-4 significant new trends. For each, provide a brief description.
   3.  **Offer a Future Outlook:** Based on the trends, provide a brief forecast for the next 3-6 months.
   4.  **Uncover Key Opportunities (Data Science):** Identify 2-3 specific, actionable opportunities that a real estate professional could capitalize on based on the data. For each, provide a clear rationale. (e.g., "Opportunity: Target 1-bedroom apartments in JVC for rental investment. Rationale: Rental yields in JVC for 1-beds have increased by 8% YoY, while sales prices have only risen 4%, indicating a strong rental market.").
@@ -95,10 +108,20 @@ const getMarketTrendsFlow = ai.defineFlow(
     outputSchema: GetMarketTrendsOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const news = await getNews(input.market as Market);
+    
+    const {output} = await prompt({
+      topic: input.topic,
+      newsSummary: news.summary,
+      newsSentiment: news.sentiment,
+    });
     if (!output) {
         throw new Error('The AI failed to generate a market trend analysis.');
     }
-    return output;
+    return {
+      ...output,
+      newsSummary: news.summary,
+      newsSentiment: news.sentiment,
+    }
   }
 );

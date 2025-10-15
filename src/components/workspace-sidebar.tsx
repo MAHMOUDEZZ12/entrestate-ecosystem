@@ -17,7 +17,13 @@ import {
   Building,
   UserPlus,
   Sparkles,
-  Lightbulb
+  Lightbulb,
+  Cloud,
+  List,
+  Facebook,
+  Palette,
+  Briefcase,
+  Users, // Import the Users icon for the Lead Intelligence Suite
 } from 'lucide-react';
 import {
   Tooltip,
@@ -29,13 +35,18 @@ import {
 // Add a 'hasSparkles' property to explicitly control sparkle display
 const sidebarLinks = [
   { href: '/me/workspace', label: 'AI Dashboard', icon: <LayoutDashboard />, hasSparkles: true },
+  { href: '/me/dashboard', label: 'Cloud Dashboard', icon: <Cloud />, hasSparkles: true },
+  { href: '/me/listing-portal', label: 'Listing Portal', icon: <List />, hasSparkles: true },
+  { href: '/me/meta-intelligence', label: 'Meta Intelligence', icon: <Facebook />, hasSparkles: true },
+  { href: '/me/creative-hub', label: 'Creative Hub', icon: <Palette />, hasSparkles: true },
+  { href: '/me/super-seller-suite', label: 'Super Seller Suite', icon: <Briefcase />, hasSparkles: true },
+  { href: '/me/lead-intelligence', label: 'Lead Intelligence', icon: <Users />, hasSparkles: true },
   { href: '/me/marketplace', label: 'AI Apps', icon: <Compass />, hasSparkles: true },
   { href: '/me/flows', label: 'AI Flow Builder', icon: <Workflow />, hasSparkles: true },
   { href: '/me/brand', label: 'Brand & Assets', icon: <FolderCog /> },
   { href: '/me/tool/projects-finder', label: 'AI Market Library', icon: <Building />, hasSparkles: true },
-  { href: '/me/leads', label: 'Leads (CRM)', icon: <UserPlus /> },
   { href: '/me/community', label: 'Community Hub', icon: <Users2 /> },
-  { href: '/me/daily-motivation', label: 'Daily Motivation', icon: <Lightbulb /> },
+  { href: 'g/me/daily-motivation', label: 'Daily Motivation', icon: <Lightbulb /> },
 ];
 
 const bottomLinks = [

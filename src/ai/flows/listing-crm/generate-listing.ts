@@ -2,10 +2,12 @@
 'use server';
 
 /**
- * @fileOverview AI flow to generate compelling real estate listing descriptions.
+ * @fileOverview AI flow to generate compelling real estate listing descriptions,
+ * enhanced with real-time market data to maximize impact.
  *
- * This flow takes property details and generates a persuasive, SEO-friendly description
- * suitable for platforms like Property Finder and Bayut.
+ * This flow takes property details, analyzes them against current market trends,
+ * and generates a persuasive, SEO-friendly description optimized for platforms
+ * like Property Finder and Bayut.
  *
  * @module AI/Flows/GenerateListing
  *
@@ -16,6 +18,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { getMarketTrends, GetMarketTrendsOutputSchema } from '../market-intelligence/get-market-trends';
 
 /**
  * Defines the schema for the input of the listing generation flow.
@@ -26,6 +29,7 @@ export const GenerateListingInputSchema = z.object({
   keyDetails: z.string().describe('Basic stats like beds, baths, and square footage.'),
   uniqueFeatures: z.string().describe('What makes this property special. Separate features with a comma or newline.'),
   tone: z.enum(['Luxury', 'Family-Friendly', 'Modern', 'Cozy', 'Urgent']).describe('The desired tone for the listing description.'),
+  market: z.object({ name: z.string() }).describe("The market the property is in."),
 });
 export type GenerateListingInput = z.infer<typeof GenerateListingInputSchema>;
 
@@ -54,21 +58,41 @@ export async function generateListing(
 
 const generateListingPrompt = ai.definePrompt({
   name: 'generateListingPrompt',
-  input: {schema: GenerateListingInputSchema},
+  input: {schema: z.object({
+    platform: z.string(),
+    propertyAddress: z.string(),
+    keyDetails: z.string(),
+    uniqueFeatures: z.string(),
+    tone: z.string(),
+    marketAnalysis: GetMarketTrendsOutputSchema,
+  })},
   output: {schema: GenerateListingOutputSchema},
-  prompt: `You are an expert real estate copywriter specializing in creating high-performing listings for the Dubai market on platforms like {{{platform}}}.
+  prompt: `You are an expert real estate copywriter specializing in creating high-performing listings for the Dubai market on platforms like {{{platform}}}. You write data-driven copy that converts.
 
-  **Platform:** {{{platform}}}
-  **Property Address:** {{{propertyAddress}}}
-  **Key Details:** {{{keyDetails}}}
-  **Unique Features:** {{{uniqueFeatures}}}
-  **Tone:** {{{tone}}}
+  **Property Details:**
+  - **Platform:** {{{platform}}}
+  - **Property Address:** {{{propertyAddress}}}
+  - **Key Details:** {{{keyDetails}}}
+  - **Unique Features:** {{{uniqueFeatures}}}
+  - **Tone:** {{{tone}}}
+
+  **Live Market Analysis:**
+  - **Overall Sentiment:** {{{marketAnalysis.overallSentiment}}}
+  - **Key Opportunities:**
+    {{#each marketAnalysis.keyOpportunities}}
+    - {{{opportunity}}}: {{{rationale}}}
+    {{/each}}
+  - **Emerging Trends:**
+    {{#each marketAnalysis.emergingTrends}}
+    - {{{trend}}}: {{{description}}}
+    {{/each}}
+
 
   **Instructions:**
 
-  1.  **Create a Compelling Title:** Write a headline that is both captivating and rich with keywords buyers would search for.
-  2.  **Write a Persuasive Description:** Craft a narrative-driven property description. Start with a hook, detail the unique features, describe the lifestyle, and end with a clear call-to-action.
-  3.  **Generate Keywords:** Provide a list of 5-7 powerful keywords that should be added to the listing on the specified platform to maximize visibility.
+  1.  **Create a Data-Driven, Compelling Title:** Write a headline that is both captivating and rich with keywords. **Subtly weave in elements from the live market analysis.** For example, if a key opportunity is "high rental yields for 1-beds," your title could be "High-Yield 1-Bed with Stunning Marina Views."
+  2.  **Write a Persuasive Description:** Craft a narrative-driven property description. Start with a hook, detail the unique features, describe the lifestyle, and end with a clear call-to-action. **Strategically highlight features that align with the emerging trends and key opportunities.** For instance, if "home offices" are a trend, emphasize the study nook.
+  3.  **Generate Optimized Keywords:** Provide a list of 5-7 powerful keywords. **Base these keywords on the property details AND the market analysis** to capture the most relevant search traffic.
   `,
 });
 
@@ -79,7 +103,16 @@ const generateListingFlow = ai.defineFlow(
     outputSchema: GenerateListingOutputSchema,
   },
   async input => {
-    const {output} = await generateListingPrompt(input);
+    const marketAnalysis = await getMarketTrends({
+      topic: `Market trends for a property with details: ${input.keyDetails}`,
+      market: input.market,
+    });
+
+    const {output} = await generateListingPrompt({
+      ...input,
+      marketAnalysis,
+    });
+
     if (!output) {
       throw new Error('Failed to generate listing content.');
     }

@@ -2,10 +2,12 @@
 'use server';
 
 /**
- * @fileOverview An AI flow to investigate a lead across various online sources.
+ * @fileOverview An AI flow to investigate a lead across various online sources,
+ * enriched with real-time market analysis.
  *
  * This flow takes basic lead information, searches public sources (simulated),
- * and returns a list of potential matches with a summary and confidence score.
+ * analyzes the lead in the context of the current market, and returns a
+ * comprehensive profile with a summary and confidence score.
  *
  * @module AI/Flows/InvestigateLead
  *
@@ -14,18 +16,36 @@
 
 import {ai} from '@/ai/genkit';
 import {
-  InvestigateLeadInputSchema,
-  InvestigateLeadOutputSchema,
+  InvestigateLeadInputSchema as BaseInvestigateLeadInputSchema,
+  InvestigateLeadOutputSchema as BaseInvestigateLeadOutputSchema,
   InvestigateLeadInput,
   InvestigateLeadOutput,
 } from '@/ai/flows/types';
+import { getMarketTrends, GetMarketTrendsOutputSchema } from '../market-intelligence/get-market-trends';
+import { z } from 'zod';
+
+// Extend the base schemas to include market analysis
+export const InvestigateLeadInputSchema = BaseInvestigateLeadInputSchema.extend({
+  market: z.object({ name: z.string() }).describe("The market to analyze."),
+});
+
+export const InvestigateLeadOutputSchema = BaseInvestigateLeadOutputSchema.extend({
+    marketAnalysis: GetMarketTrendsOutputSchema.describe("An analysis of the lead in the context of the current market."),
+});
 
 
 const investigateLeadPrompt = ai.definePrompt({
   name: 'investigateLeadPrompt',
-  input: {schema: InvestigateLeadInputSchema},
-  output: {schema: InvestigateLeadOutputSchema},
-  prompt: `You are an expert lead investigator and open-source intelligence (OSINT) analyst. Your task is to find information about a potential lead based on the provided details. You must search across simulated platforms like LinkedIn, Facebook, Instagram, and general web search.
+  input: {schema: z.object({
+    name: z.string(),
+    company: z.string().optional(),
+    email: z.string().optional(),
+    location: z.string().optional(),
+    role: z.string().optional(),
+    marketAnalysis: GetMarketTrendsOutputSchema,
+  })},
+  output: {schema: BaseInvestigateLeadOutputSchema},
+  prompt: `You are an expert lead investigator and open-source intelligence (OSINT) analyst for the real estate industry. Your task is to find information about a potential lead and analyze them in the context of the current market.
 
   **Lead Details:**
   - Name: {{{name}}}
@@ -34,17 +54,25 @@ const investigateLeadPrompt = ai.definePrompt({
   {{#if location}}- Location: {{{location}}}{{/if}}
   {{#if role}}- Role: {{{role}}}{{/if}}
 
+  **Current Market Analysis:**
+  {{#with marketAnalysis}}
+  - Sentiment: {{overallSentiment}}
+  - Key Opportunities:
+    {{#each keyOpportunities}}
+    - {{opportunity}}: {{rationale}}
+    {{/each}}
+  {{/with}}
+
   **Instructions:**
 
-  1.  **Simulate Search:** Based on the input, simulate a search across professional networks (like LinkedIn), social media (Facebook, Instagram), and the web.
+  1.  **Simulate Search:** Based on the lead's details, simulate a search across professional networks (like LinkedIn), social media (Facebook, Instagram), and the web.
   2.  **Generate Matches:** Create 1-3 plausible but fictional matches. For each match:
       *   Provide a name, the source (e.g., "LinkedIn"), a fictional but valid-looking profile URL.
       *   Write a summary of the person's fictional profile (e.g., title, company, a brief bio snippet).
       *   Assign a confidence score based on how well the fictional profile matches the input details.
-  3.  **Handle Ambiguity:** If the input is vague (e.g., just a common name), generate multiple potential matches and lower the confidence scores. If the input is very specific, generate one strong match with a high confidence score.
-  4.  **Provide a Summary:** Write a brief overall summary of your findings, for example: "I found a strong potential match on LinkedIn and a possible secondary match on Facebook. Further refinement may be needed."
+  3.  **Provide an AI-Powered Summary:** Write a brief overall summary of your findings. **Crucially, analyze the lead's potential in the context of the current market analysis.** For example: "I found a strong potential match on LinkedIn who is a 'Senior Project Manager' at a major developer. Given the current market trend of increasing demand for off-plan properties (see market analysis), this individual could be a key decision-maker in upcoming projects and represents a high-value lead."
 
-  Return the results in the specified format.
+  Return the results in the specified format, but only the lead investigation part. The market analysis is for your context only.
   `,
 });
 
@@ -55,11 +83,25 @@ const investigateLeadFlow = ai.defineFlow(
     outputSchema: InvestigateLeadOutputSchema,
   },
   async input => {
-    const {output} = await investigateLeadPrompt(input);
+
+    const marketTrends = await getMarketTrends({
+        topic: `real estate investment trends related to a ${input.role || 'professional'} in ${input.location || 'the area'}`,
+        market: input.market,
+    });
+
+    const {output} = await investigateLeadPrompt({
+        ...input,
+        marketAnalysis: marketTrends,
+    });
+
     if (!output) {
       throw new Error('The AI failed to investigate the lead.');
     }
-    return output;
+    
+    return {
+        ...output,
+        marketAnalysis: marketTrends,
+    };
   }
 );
 
@@ -73,5 +115,6 @@ const investigateLeadFlow = ai.defineFlow(
 export async function investigateLead(
   input: InvestigateLeadInput
 ): Promise<InvestigateLeadOutput> {
+  // @ts-ignore
   return investigateLeadFlow(input);
 }

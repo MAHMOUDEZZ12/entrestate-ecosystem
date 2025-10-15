@@ -2,11 +2,13 @@
 'use server';
 
 /**
- * @fileOverview The master AI orchestrator for creating and launching a Meta ad campaign.
+ * @fileOverview The master AI orchestrator for creating and launching a Meta ad campaign,
+ * now supercharged with real-time market intelligence.
  *
  * This flow acts as a "Pilot," taking a high-level goal and a project ID, and then
  * intelligently calling a sequence of other AI tools to build a complete campaign.
- * It suggests an audience, generates ad creative, and assembles the final campaign structure.
+ * It analyzes the market, suggests a data-driven audience, generates trend-responsive
+ * ad creative, and assembles the final campaign structure.
  *
  * @module AI/Flows/MetaAutoPilot
  */
@@ -23,6 +25,7 @@ import {
     MetaAutoPilotInput, 
     MetaAutoPilotOutput,
 } from '@/ai/flows/types';
+import { getMarketTrends } from '../market-intelligence/get-market-trends';
 
 
 const metaAutoPilotFlow = ai.defineFlow(
@@ -33,37 +36,49 @@ const metaAutoPilotFlow = ai.defineFlow(
     },
     async (input) => {
         
-        // 1. Fetch Project Data using the new database service
+        // 1. Fetch Project Data
         const projectData = await getProjectById(input.projectId);
         if (!projectData) {
             throw new Error(`Project with ID "${input.projectId}" not found.`);
         }
 
-        // 2. Suggest Targeting Options
-        const audienceSuggestions = await suggestTargetingOptions({ projectId: input.projectId });
+        // 2. Get Market Intelligence
+        const marketAnalysis = await getMarketTrends({
+            topic: `Effective advertising strategies for a project like ${projectData.name} in the current market`,
+            market: input.market,
+        });
 
-        // 3. Generate Ad Creative
+        // 3. Suggest Targeting Options (now with market context)
+        const audienceSuggestions = await suggestTargetingOptions({
+            projectId: input.projectId,
+            marketAnalysis,
+        });
+
+        // 4. Generate Ad Creative (now with market context)
         const adCreative = await generateAdFromBrochure({
             projectName: projectData.name,
-            focusArea: 'The luxury lifestyle and investment potential.',
+            focusArea: 'The luxury lifestyle and investment potential, aligned with current market trends.',
             toneOfVoice: 'Professional and aspirational',
+            marketAnalysis,
         });
 
-        // 4. Create the final Campaign Structure
+        // 5. Create the final Campaign Structure (now with market context)
         const finalCampaignPlan = await createMetaCampaign({
             campaignGoal: input.campaignGoal,
-            projectBrochureDataUri: adCreative.adDesign, // Use the generated ad design as the 'brochure'
+            projectBrochureDataUri: adCreative.adDesign,
             budget: 500, // Example budget
             durationDays: 14, // Example duration
+            marketAnalysis,
         });
 
-        // 5. Final Output
+        // 6. Final Output
         const result: MetaAutoPilotOutput = {
             status: 'Campaign Plan Assembled Successfully.',
             finalCampaignId: finalCampaignPlan.publishedCampaignId,
             audienceStrategy: audienceSuggestions,
             adCreative: adCreative,
             finalCampaignPlan: finalCampaignPlan,
+            marketAnalysis,
         };
 
         return result;

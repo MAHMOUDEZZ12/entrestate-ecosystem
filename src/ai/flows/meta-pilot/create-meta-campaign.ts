@@ -2,11 +2,12 @@
 'use server';
 
 /**
- * @fileOverview An AI flow to create a complete Meta (Facebook/Instagram) ad campaign structure.
+ * @fileOverview An AI flow to create a complete Meta (Facebook/Instagram) ad campaign structure,
+ * supercharged with real-time market intelligence.
  *
- * This flow acts as an expert ad manager, taking a high-level goal and project details
- * and generating a comprehensive campaign plan, from campaign objectives down to
- * specific ad creatives. The publishing of the campaign is handled by a separate tool.
+ * This flow acts as an expert ad manager, taking a high-level goal and project details,
+ * analyzing them against market trends, and generating a comprehensive, data-driven
+ * campaign plan, from campaign objectives down to specific ad creatives.
  *
  * @module AI/Flows/CreateMetaCampaign
  */
@@ -14,37 +15,57 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'zod';
 import { CreateMetaCampaignInputSchema, CreateMetaCampaignOutputSchema, CreateMetaCampaignInput, CreateMetaCampaignOutput } from '@/ai/flows/types';
+import { GetMarketTrendsOutputSchema } from '../market-intelligence/get-market-trends';
 
 
 const createMetaCampaignPrompt = ai.definePrompt({
   name: 'createMetaCampaignPrompt',
-  input: {schema: CreateMetaCampaignInputSchema}, 
+  input: {schema: z.object({
+    campaignGoal: z.string(),
+    budget: z.number(),
+    durationDays: z.number(),
+    projectBrochureDataUri: z.string().optional(),
+    marketAnalysis: GetMarketTrendsOutputSchema.optional(),
+  })}, 
   output: {schema: CreateMetaCampaignOutputSchema},
-  prompt: `You are an expert Meta Ads strategist specializing in real estate. Your task is to take a user\'s goal and project brochure and create a complete, ready-to-launch campaign structure.
+  prompt: `You are an expert Meta Ads strategist specializing in real estate. Your task is to take a user\'s goal, project brochure, and live market analysis to create a complete, data-driven, and ready-to-launch campaign structure.
 
   **User Inputs:**
   - Campaign Goal: {{{campaignGoal}}}
   - Total Budget: {{{budget}}}
   - Duration (Days): {{{durationDays}}}
-  {{#if projectBrochureDataUri}}
-  - Project Brochure: {{media url=projectBrochureDataUri}}
+  {{#if projectBrochureDataUri}}- Project Brochure: {{media url=projectBrochureDataUri}}{{/if}}
+
+  **Live Market Analysis:**
+  {{#if marketAnalysis}}
+  - **Overall Sentiment:** {{marketAnalysis.overallSentiment}}
+  - **Emerging Trends:**
+    {{#each marketAnalysis.emergingTrends}}
+    - {{{trend}}}: {{{description}}}
+    {{/each}}
+  - **Key Opportunities:**
+    {{#each marketAnalysis.keyOpportunities}}
+    - {{{opportunity}}}: {{{rationale}}}
+    {{/each}}
+  {{else}}
+  - No market analysis available.
   {{/if}}
 
   **Instructions:**
 
-  1.  **Infer Audience:** Based *only* on the project brochure, infer the ideal target audience. Who is this property for? (e.g., "Young professionals," "High-net-worth families," "First-time international investors").
-  2.  **Campaign Name & Objective:** Based on the user\'s goal and the project, create a clear campaign name and choose the most appropriate Meta Ads objective (e.g., LEAD_GENERATION, AWARENESS, TRAFFIC).
-  3.  **Ad Sets:**
-      - Create at least two ad sets. One for a broad audience based on your inferred persona, and one for a more niche, targeted audience (e.g., a specific interest group or lookalike audience).
-      - For each ad set, provide a name and a summary of the recommended targeting strategy (demographics, interests, location).
+  1.  **Infer Audience (Data-Driven):** Based on the project brochure AND the live market analysis, infer the ideal target audience. **Your audience recommendations must be aligned with the market opportunities.** (e.g., "Given the trend of 'international buyers seeking investment properties,' we should target high-net-worth individuals in key European and Asian markets.").
+  2.  **Campaign Name & Objective:** Based on the user's goal and the project, create a clear campaign name and choose the most appropriate Meta Ads objective (e.g., LEAD_GENERATION, AWARENESS, TRAFFIC).
+  3.  **Ad Sets (Market-Segmented):**
+      - Create at least two ad sets, **each targeting a specific market segment identified in the analysis.** For example, one ad set could target "Local Professionals Seeking Luxury," while another targets "International Investors capitalizaing on {{{marketAnalysis.keyOpportunities[0].opportunity}}}".
+      - For each ad set, provide a name and a summary of the recommended targeting strategy (demographics, interests, location), **justifying your choices with the market data.**
       - Calculate a reasonable daily budget for each ad set based on the total budget and duration.
-  4.  **Ad Creatives:**
+  4.  **Ad Creatives (Trend-Responsive):**
       - Generate at least three distinct ad creative variations.
-      - For each creative, write a compelling headline and body text, extracting key selling points from the brochure.
-      - **CRITICAL**: The call to action and ad copy MUST be tailored to the specific 'Campaign Goal'. For example, if the goal is "Lead Generation to WhatsApp", the CTA should be "Chat on WhatsApp" and the copy should encourage a direct conversation. If the goal is "Lead Generation to Landing Page", the CTA should be "Learn More" and the copy should drive clicks to the website.
-      - Provide a specific image suggestion for each creative that would be visually appealing and relevant.
-  5.  **Optimization Advice:** Provide one key piece of advice for the user to keep in mind while running this campaign on Meta's platforms.
-  6.  **Confirmation**: Output a dummy publishedCampaignId of "campaign-not-published" to indicate the plan is ready but has not been sent to Meta.
+      - For each creative, write a compelling headline and body text that **speaks directly to the market trends.** For example, if a trend is 'sustainability,' the headline could be "Live Green in the Heart of the City."
+      - The call to action MUST be tailored to the specific 'Campaign Goal'.
+      - Provide a specific image suggestion for each creative that visually represents the market trend being targeted.
+  5.  **Optimization Advice (Actionable & Insightful):** Provide one key piece of advice for running this campaign on Meta's platforms, **linking it back to the market analysis.** (e.g., "Monitor the click-through-rate of the 'International Investor' ad set closely. If it's high, consider allocating more budget to capitalize on this emerging opportunity.").
+  6.  **Confirmation**: Output a dummy publishedCampaignId of "campaign-not-published" to indicate the plan is ready.
   `,
 });
 

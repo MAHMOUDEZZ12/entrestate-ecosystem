@@ -1,9 +1,11 @@
 
 import { z } from 'zod';
+import { GetMarketTrendsOutputSchema } from './market-intelligence/get-market-trends';
 
 // Schemas for Audience Creator (`suggest-targeting-options`)
 export const SuggestTargetingOptionsInputSchema = z.object({
   projectId: z.string().describe('The project ID to generate targeting for.'),
+  marketAnalysis: GetMarketTrendsOutputSchema.optional().describe('The market analysis to inform the targeting strategy.'),
 });
 export const SuggestTargetingOptionsOutputSchema = z.object({
   strategies: z.array(z.object({
@@ -19,11 +21,18 @@ export type SuggestTargetingOptionsOutput = z.infer<typeof SuggestTargetingOptio
 
 
 // Schemas for Ad Creative Generation (`generate-ad-from-brochure`)
+export const GenerateAdFromBrochureInputSchema = z.object({
+    projectName: z.string(),
+    focusArea: z.string(),
+    toneOfVoice: z.string(),
+    marketAnalysis: GetMarketTrendsOutputSchema.optional().describe('The market analysis to inform the ad creative.'),
+});
 export const GenerateAdFromBrochureOutputSchema = z.object({
   adCopy: z.string().describe('The generated ad copy.'),
   adDesign: z.string().describe('The data URI of the generated ad design.'),
   landingPage: z.string().describe('The data URI of the generated landing page.'),
 });
+export type GenerateAdFromBrochureInput = z.infer<typeof GenerateAdFromBrochureInputSchema>;
 export type GenerateAdFromBrochureOutput = z.infer<typeof GenerateAdFromBrochureOutputSchema>;
 
 // Schemas for Meta Ads Co-Pilot (`create-meta-campaign`)
@@ -32,6 +41,7 @@ export const CreateMetaCampaignInputSchema = z.object({
   projectBrochureDataUri: z.string().optional().describe("The project brochure as a data URI."),
   budget: z.number().describe("The total ad spend budget."),
   durationDays: z.number().describe("The campaign duration in days."),
+  marketAnalysis: GetMarketTrendsOutputSchema.optional().describe('The market analysis to inform the campaign strategy.'),
 });
 export const CreateMetaCampaignOutputSchema = z.object({
     publishedCampaignId: z.string().describe("A dummy ID confirming the plan is ready. Always 'campaign-not-published'."),
@@ -98,6 +108,7 @@ export type GenerateVideoPresenterOutput = z.infer<typeof GenerateVideoPresenter
 export const MetaAutoPilotInputSchema = z.object({
   projectId: z.string().describe('The ID of the project for the campaign.'),
   campaignGoal: z.string().describe('The high-level goal of the campaign, e.g., "Lead Generation to Landing Page".'),
+  market: z.object({ name: z.string() }).describe("The market to target."),
 });
 export const MetaAutoPilotOutputSchema = z.object({
   status: z.string(),
@@ -105,6 +116,7 @@ export const MetaAutoPilotOutputSchema = z.object({
   audienceStrategy: SuggestTargetingOptionsOutputSchema.optional(),
   adCreative: GenerateAdFromBrochureOutputSchema.optional(),
   finalCampaignPlan: CreateMetaCampaignOutputSchema.optional(),
+  marketAnalysis: GetMarketTrendsOutputSchema.optional(),
 });
 export type MetaAutoPilotInput = z.infer<typeof MetaAutoPilotInputSchema>;
 export type MetaAutoPilotOutput = z.infer<typeof MetaAutoPilotOutputSchema>;

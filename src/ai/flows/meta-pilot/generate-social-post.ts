@@ -2,10 +2,12 @@
 'use server';
 
 /**
- * @fileOverview AI flow to generate a one-week social media strategy from a given topic or URL.
+ * @fileOverview AI flow to generate a one-week social media strategy from a given topic or URL,
+ * optimized with real-time market intelligence.
  *
  * This flow creates a comprehensive, one-week social media plan, including multiple post
- * variations, a tiered hashtag strategy, and specific image suggestions.
+ * variations, a tiered hashtag strategy, and specific image suggestions, all aligned with
+ * current market trends.
  *
  * @module AI/Flows/GenerateSocialPost
  *
@@ -16,6 +18,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { getMarketTrends, GetMarketTrendsOutputSchema } from '../market-intelligence/get-market-trends';
 
 /**
  * Defines the schema for the input of the social post generation flow.
@@ -41,6 +44,7 @@ const GenerateSocialPostInputSchema = z.object({
    * @example "Professional", "Humorous", "Urgent"
    */
   tone: z.string().describe('The desired tone of voice for the post.'),
+  market: z.object({ name: z.string() }).describe("The market to target."),
 });
 export type GenerateSocialPostInput = z.infer<
   typeof GenerateSocialPostInputSchema
@@ -80,24 +84,40 @@ export async function generateSocialPost(
 
 const prompt = ai.definePrompt({
   name: 'generateSocialPostPrompt',
-  input: {schema: GenerateSocialPostInputSchema},
+  input: {schema: z.object({
+    source: z.string(),
+    platform: z.string(),
+    tone: z.string(),
+    marketAnalysis: GetMarketTrendsOutputSchema,
+  })},
   output: {schema: GenerateSocialPostOutputSchema},
-  prompt: `You are an expert real estate social media strategist. Your task is to create a complete, 7-day content plan based on the provided source.
+  prompt: `You are an expert real estate social media strategist for the Dubai market. Your task is to create a complete, 7-day content plan that is not only engaging but also strategically aligned with the latest market intelligence.
 
-  **Source:** {{{source}}}
+  **Source Content:** {{{source}}}
   **Platform:** {{{platform}}}
   **Tone:** {{{tone}}}
 
+  **Live Market Analysis:**
+  - **Overall Sentiment:** {{{marketAnalysis.overallSentiment}}}
+  - **Emerging Trends:**
+    {{#each marketAnalysis.emergingTrends}}
+    - {{{trend}}}: {{{description}}}
+    {{/each}}
+  - **Key Opportunities:**
+    {{#each marketAnalysis.keyOpportunities}}
+    - {{{opportunity}}}: {{{rationale}}}
+    {{/each}}
+
   **Instructions:**
 
-  1.  **Weekly Content Plan:** Generate a unique, engaging post for each day of the week (Monday to Sunday) and place it in the 'posts' output field. Each post should offer a different angle or highlight a different aspect of the source content.
-  2.  **Image Suggestions:** For each daily post, provide a specific and compelling image suggestion that would visually complement the text.
-  3.  **Hashtag Strategy:** Create a comprehensive hashtag strategy divided into three tiers:
-      *   **Primary:** 5-7 high-volume, broad-appeal hashtags relevant to real estate and the platform.
-      *   **Secondary:** 5-7 niche-specific hashtags related to the source content (e.g., #luxurycondo, #firsttimebuyer).
-      *   **Location:** 3-5 hashtags for the specific city or neighborhood mentioned or implied in the source (e.g., #miamirealestate, #downtownliving).
+  1.  **Weekly Content Plan (Market-Aware):** Generate a unique, engaging post for each day of the week (Monday to Sunday). **Each post must be inspired by both the source content AND the live market analysis.** For example, if a trend is "increased demand for sustainable homes," your Tuesday post could be "Discover 5 eco-friendly features in our latest listing that are saving owners money."
+  2.  **Image Suggestions (Trend-Aligned):** For each daily post, provide a specific image suggestion that reflects the market-aware content.
+  3.  **Hashtag Strategy (Intelligent Tiers):** Create a comprehensive hashtag strategy. **The hashtags should be influenced by the market trends.**
+      *   **Primary:** 5-7 high-volume hashtags (e.g., #dubairealestate).
+      *   **Secondary:** 5-7 niche hashtags directly related to the market trends (e.g., #ecoluxury, #smartinvesting).
+      *   **Location:** 3-5 location-based hashtags.
 
-  Structure the output to be a complete, ready-to-use strategy for a busy real estate professional.
+  Structure the output to be a complete, ready-to-use strategy that positions the user as a market expert.
   `,
 });
 
@@ -108,7 +128,15 @@ const generateSocialPostFlow = ai.defineFlow(
     outputSchema: GenerateSocialPostOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const marketAnalysis = await getMarketTrends({
+        topic: `Social media content about ${input.source}`,
+        market: input.market,
+    });
+
+    const {output} = await prompt({
+        ...input,
+        marketAnalysis,
+    });
     return output!;
   }
 );

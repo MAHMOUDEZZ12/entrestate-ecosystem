@@ -12,7 +12,6 @@ import { CanvasProvider } from '@/context/CanvasContext';
 import { CreativeCanvas } from '@/components/creative-canvas';
 import { SensitiveAreaProvider } from '@/context/SensitiveAreaContext';
 import { SpotlightProvider } from '@/context/SpotlightContext';
-import { AppLayout } from '@/components/AppLayout';
 
 const fontSans = PT_Sans({ 
   subsets: ['latin'],
@@ -59,9 +58,7 @@ export default function RootLayout({
                 <SpotlightProvider>
                   <TabProvider>
                       <CanvasProvider>
-                          <AppLayout>
-                            {children}
-                          </AppLayout>
+                          {children}
                            <Toaster />
                            <CookieConsent />
                            <CreativeCanvas />
