@@ -1,39 +1,50 @@
+
 import * as functions from 'firebase-functions';
-import { db } from './admin.js';
-import type { JobDoc } from './types.js';
-import { runStep } from './runner.js';
+import { firestore } from 'firebase-admin';
+import { Job } from '../../src/lib/types/jobs'; // Adjust path as needed
 
-export const onJobCreated = functions.firestore
-  .document('users/{uid}/jobs/{jobId}')
-  .onCreate(async (snap, ctx) => {
-    const uid = ctx.params.uid as string;
-    const job = snap.data() as JobDoc;
-    const jobRef = snap.ref;
+// Import all your individual AI flows here
+import { generateMarketingKit } from '../../src/ai/flows/super-seller-suite/generate-marketing-kit';
+import { runSalesPilot } from '../../src/ai/flows/lead-intelligence/sales-pilot';
 
-    try {
-      await jobRef.update({ status: 'running', progress: 0 });
+const flowRunners: Record<string, (params: any) => Promise<any>> = {
+    generateMarketingKit,
+    runSalesPilot,
+    // ... register all other high-level flows
+};
 
-      let accum: any = null;
-      const steps = job.plan?.steps ?? [];
-      for (let i = 0; i < steps.length; i++) {
-        const stepName = steps[i];
-        const ts = Date.now();
-        await jobRef.update({
-          steps: functions.firestore.FieldValue.arrayUnion({ name: stepName, status: 'running', ts })
-        });
+export const executeJob = functions.firestore
+    .document('users/{userId}/jobs/{jobId}')
+    .onCreate(async (snap, context) => {
+        const job = snap.data() as Job;
+        const { jobId } = context.params;
+        const jobRef = snap.ref;
 
-        const out = await runStep(stepName as any, { uid, plan: job.plan, source: job.source }, accum);
-        accum = out;
+        console.log(`[${jobId}] Starting execution for flow: ${job.flowId}`);
 
-        await jobRef.update({
-          steps: functions.firestore.FieldValue.arrayUnion({ name: stepName, status: 'done', ts: Date.now(), info: out }),
-          progress: Math.round(((i + 1) / steps.length) * 100)
-        });
-      }
+        await jobRef.update({ status: 'running', updatedAt: new Date() });
 
-      await jobRef.update({ status: 'done', result: accum });
-    } catch (e:any) {
-      await jobRef.update({ status: 'error', error: String(e) });
-      throw e;
-    }
-  });
+        try {
+            const runner = flowRunners[job.flowId];
+            if (!runner) {
+                throw new Error(`No runner found for flow ID: ${job.flowId}`);
+            }
+
+            const result = await runner(job.params);
+
+            await jobRef.update({
+                status: 'completed',
+                updatedAt: new Date(),
+                result,
+            });
+            console.log(`[${jobId}] Successfully completed flow: ${job.flowId}`);
+
+        } catch (error: any) {
+            console.error(`[${jobId}] Error executing flow ${job.flowId}:`, error);
+            await jobRef.update({
+                status: 'failed',
+                updatedAt: new Date(),
+                error: error.message,
+            });
+        }
+    });

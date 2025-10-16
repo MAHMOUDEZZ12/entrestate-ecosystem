@@ -12,6 +12,8 @@ import { CanvasProvider } from '@/context/CanvasContext';
 import { CreativeCanvas } from '@/components/creative-canvas';
 import { SensitiveAreaProvider } from '@/context/SensitiveAreaContext';
 import { SpotlightProvider } from '@/context/SpotlightContext';
+import { MasterHeader } from '@/components/master-header'; // Import the new Master Header
+import { MasterFooter } from '@/components/master-footer';
 
 const fontSans = PT_Sans({ 
   subsets: ['latin'],
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Entrestate — Gemini AI-Native Real Estate Ecosystem',
     description: 'The future of real estate is here. Intelligent, persona-driven search and a complete suite of professional AI tools, all powered by Gemini.',
-    images: ['https://firebasestorage.googleapis.com/v0/b/mtcmartechgooodstage-456-326b5.appspot.com/o/og-image.png?alt=media&token=c27f8045-8c67-48f8-81e0-35a39985b546'],
+    images: ['https://firebasestorage.googleapis.com/v0/b/mtcmartechgooodstage-465-326b5.appspot.com/o/og-image.png?alt=media&token=c27f8045-8c67-48f8-81e0-35a39985b546'],
   },
 };
 
@@ -58,7 +60,13 @@ export default function RootLayout({
                 <SpotlightProvider>
                   <TabProvider>
                       <CanvasProvider>
-                          {children}
+                          <div className="flex flex-col min-h-screen">
+                            <MasterHeader />
+                            <main className="flex-grow">
+                                {children}
+                            </main>
+                            <MasterFooter />
+                          </div>
                            <Toaster />
                            <CookieConsent />
                            <CreativeCanvas />

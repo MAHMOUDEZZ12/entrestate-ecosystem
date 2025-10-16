@@ -1,7 +1,7 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-  },
+  outputFileTracingRoot: __dirname,
   serverExternalPackages: ['firebase-admin'],
   images: {
     domains: ['firebasestorage.googleapis.com'],

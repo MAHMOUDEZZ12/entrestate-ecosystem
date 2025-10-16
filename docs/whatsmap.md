@@ -1,41 +1,49 @@
-# WhatsMAP — Conversational Market Expert & Action Engine
+# WhatsMAP — The AI Brain of the Entrestate OS
 
-WhatsMAP is both Q&A (grounded answers about projects/availability) and Action Engine (runs flows like brochure generation, Meta launch).
+WhatsMAP is the central intelligence of the ecosystem. It functions as a **Conversational Market Expert**, a **Proactive Co-pilot**, and a powerful **Action Engine**. It understands natural language, orchestrates complex workflows across all suites, and serves as the primary interface for user interaction, whether through the EI-OS workspace or WhatsApp.
 
-## Endpoints
+## Endpoints & Integration
 
-- GET /api/wa/webhook  - Meta verification using WHATSAPP_WEBHOOK_VERIFY_TOKEN
-- POST /api/wa/webhook - inbound messages
-  - Maps phone -> uid using waPhoneMap/{phone} = { uid }
-  - If Q&A, calls /api/qa/query and saves assistant reply to users/{uid}/conversations/{phone}/messages
-  - If Action, creates users/{uid}/jobs/{jobId} with plan + steps
+WhatsMAP's core logic is exposed through Genkit flows, but it also integrates with external services via API endpoints.
 
-## Q&A flow
+-   **EI-OS Integration**: The `WhatsMAPEngine` component directly calls the `runWhatsMAP` flow, passing the user's query and the active suite context (`activeSuite`). This allows for a deeply integrated and context-aware experience.
 
-1) Parse text -> filters: src/lib/qa/parse.ts
-2) Search candidates -> src/lib/qa/search.ts
-3) Optional availability -> src/lib/qa/availability.ts
-4) Compose answer -> src/lib/qa/answer.ts
-5) API -> POST /api/qa/query
+-   **WhatsApp Integration**:
+    -   `GET /api/wa/webhook`: Handles Meta's verification challenge using the `WHATSAPP_WEBHOOK_VERIFY_TOKEN`.
+    -   `POST /api/wa/webhook`: Processes inbound user messages.
+        -   It maps the user's phone number to their `uid`.
+        -   It calls the `runWhatsMAP` flow with the message content.
+        -   The rich response is then formatted and sent back to the user via the `/api/wa/send` endpoint.
 
-### Example Q
-> 2 bed under 2.5m emaar beachfront availability
+## The Intelligence Pipeline: From Query to Action
 
-- bedrooms: 2
-- max price: 2.5M
-- developer: Emaar
-- city/area: Beachfront
+WhatsMAP processes every user query through a sophisticated, three-stage AI pipeline.
 
-### Example answer
-- Emaar Beachfront … from AED 1,950,000 …
-- -> 2BR available from AED 2,100,000 …
-- Reply with 'compare A vs B' or 'create brochure for <project>'
+1.  **Parse (`/src/lib/qa/parse.ts`)**
+    -   **Purpose**: To deconstruct a user's raw, natural language query into a structured JSON command.
+    -   **Process**: It uses a specialized Gemini prompt to identify the user's `intent` (e.g., `search_projects`, `compare_projects`) and extract key `entities` (e.g., project names, locations, price filters). This transforms ambiguity into a machine-readable instruction.
 
-## Actions (Core7 style)
+2.  **Execute (`/src/lib/qa/execute.ts`)**
+    -   **Purpose**: To take the structured command from the Parser and gather all the necessary information.
+    -   **Process**: It acts as an orchestrator. Based on the intent, it calls the appropriate internal services (`DataIntelligenceService`) or other AI flows (`getMarketTrends`, `generateListing`, etc.) to fetch data and perform actions.
 
-- lead-capture: createLead -> enrichLead -> generateScript -> scheduleFollowups
-- listing-sync: composeListing -> validate -> syncBayut -> verify
-- designer: extractSections -> generateLandingPage -> publish
-- investor-match: profileToFilters -> smartFilter -> rank
+3.  **Synthesize (`/src/lib/qa/synthesize.ts`)**
+    -   **Purpose**: To transform the raw data from the Executor into a polished, insightful, and multi-component user experience.
+    -   **Process**: It uses a final Gemini prompt to:
+        -   Generate a natural language summary of the findings.
+        -   Add valuable AI-driven insights.
+        -   Select the best UI components for presenting the information (e.g., carousels, charts, cards).
+        -   Proactively suggest the next logical action the user might want to take.
 
-You can extend planForText() in /api/wa/webhook to add more.
+## The Action Engine
+
+When WhatsMAP's **Parse** step identifies an action-oriented intent (like "generate a brochure" or "launch a campaign"), the **Execute** step calls the corresponding high-level AI flow (`generateMarketingKit`, `runSalesPilot`, etc.).
+
+This creates a seamless workflow where a user can conversationally trigger complex, multi-step operations that span across the entire EI-OS, from the Creative Hub to the Meta Intelligence Suite.
+
+## Context-Aware Intelligence
+
+WhatsMAP is always aware of the user's current context within the EI-OS (`activeSuite`). This allows it to:
+
+-   **Provide Proactive Suggestions**: The UI displays a list of relevant commands the user can execute within their current suite.
+-   **Disambiguate Queries**: If a user's query is ambiguous (e.g., "generate a report"), WhatsMAP uses the active suite to infer the most likely desired action (a *market* report in the Listing Intelligence suite vs. a *campaign performance* report in the Meta Intelligence suite).
