@@ -23,7 +23,8 @@ import {
   Facebook,
   Palette,
   Briefcase,
-  Users, // Import the Users icon for the Lead Intelligence Suite
+  Users,
+  Server, // Import the Server icon for the Cloud Intelligence Suite
 } from 'lucide-react';
 import {
   Tooltip,
@@ -41,6 +42,7 @@ const sidebarLinks = [
   { href: '/me/creative-hub', label: 'Creative Hub', icon: <Palette />, hasSparkles: true },
   { href: '/me/super-seller-suite', label: 'Super Seller Suite', icon: <Briefcase />, hasSparkles: true },
   { href: '/me/lead-intelligence', label: 'Lead Intelligence', icon: <Users />, hasSparkles: true },
+  { href: '/me/cloud-intelligence', label: 'Cloud Intelligence', icon: <Server />, hasSparkles: true },
   { href: '/me/marketplace', label: 'AI Apps', icon: <Compass />, hasSparkles: true },
   { href: '/me/flows', label: 'AI Flow Builder', icon: <Workflow />, hasSparkles: true },
   { href: '/me/brand', label: 'Brand & Assets', icon: <FolderCog /> },
