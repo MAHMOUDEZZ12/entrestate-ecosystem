@@ -6,8 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Sparkles } from "lucide-react";
-import LandingHeader from "@/app/landing-header";
-import LandingFooter from "@/app/landing-footer";
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { generateSuiteDescription } from "@/ai/flows/marketplace/generate-suite-description";
@@ -55,7 +53,6 @@ export default function SolutionPage() {
 
     return (
         <div className="bg-background">
-            <LandingHeader />
             <main>
                 <PageHeader
                     title={suite.name}
@@ -109,7 +106,6 @@ export default function SolutionPage() {
                    )}
                 </div>
             </main>
-            <LandingFooter />
         </div>
     );
 }
