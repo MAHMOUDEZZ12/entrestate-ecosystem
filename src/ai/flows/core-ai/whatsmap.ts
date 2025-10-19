@@ -7,7 +7,7 @@ import {
   getMarketTrendsTool,
   verifyListingTool,
   generateMarketingKitTool,
-} from '../tools'; // Note the new path
+} from '@/ai/tools'; // Corrected the import path
 
 const WhatsMAPInputSchema = z.object({
   query: z.string().describe("The user's natural language query."),

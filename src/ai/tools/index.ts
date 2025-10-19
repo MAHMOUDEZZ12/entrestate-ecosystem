@@ -4,10 +4,10 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-// Import the schemas and functions from existing flows
-import { getMarketTrends, GetMarketTrendsInputSchema, GetMarketTrendsOutputSchema } from '../market-intelligence/get-market-trends';
-import { verifyListing } from '../listing-crm/verify-listing';
-import { generateMarketingKit } from '../super-seller-suite/generate-marketing-kit';
+// Import the schemas and functions from existing flows using the correct path alias
+import { getMarketTrends, GetMarketTrendsInputSchema, GetMarketTrendsOutputSchema } from '@/ai/flows/market-intelligence/get-market-trends';
+import { verifyListing } from '@/ai/flows/listing-crm/verify-listing';
+import { generateMarketingKit } from '@/ai/flows/super-seller-suite/generate-marketing-kit';
 
 /**
  * A tool that gets the latest real estate market trends for a specific topic.

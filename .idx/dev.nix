@@ -11,26 +11,27 @@
   ];
   env = {
     NEXT_PUBLIC_API_URL = "http://localhost:3000";
+    HOST = "0.0.0.0";
   };
   idx = {
     extensions = [
-      "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode",
-      "firebase.firebase-vscode",
+      "dbaeumer.vscode-eslint"
+      "esbenp.prettier-vscode"
+      "firebase.firebase-vscode"
       "google.gemini-cli-vscode-ide-companion"
     ];
     previews = {
       enable = true;
       previews = {
         web = {
-          command = ["npm", "run", "dev", "--", "--port", "$PORT"];
+          command = ["npm" "run" "dev" "--" "--port" "$PORT" "--hostname" "0.0.0.0"];
           manager = "web";
         };
       };
     };
     workspace = {
       onCreate = {
-        npm-install = "npm ci";
+        "npm-install" = "npm ci";
       };
       onStart = {};
     };

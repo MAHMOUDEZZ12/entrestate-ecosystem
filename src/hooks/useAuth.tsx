@@ -2,8 +2,8 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { firebaseApp } from '@/lib/firebase';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { getFirebaseServices } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
@@ -17,7 +17,7 @@ const AuthContext = createContext<AuthContextType>({ user: null, loading: true, 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const auth = getAuth(firebaseApp);
+  const { auth } = getFirebaseServices(); // Use the new singleton
   const router = useRouter();
 
   useEffect(() => {
@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signOut = async () => {
     await auth.signOut();
-    // After signing out, redirect to the homepage.
     router.push('/');
   };
 

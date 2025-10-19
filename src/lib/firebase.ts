@@ -21,37 +21,41 @@ interface FirebaseServices {
     analytics: Analytics | null;
 }
 
-// Centralized function to get Firebase services
-export function getFirebase(): FirebaseServices | null {
-  if (typeof window === 'undefined') {
-    return null;
-  }
-  
-  const isFirebaseConfigValid = firebaseConfig.apiKey && firebaseConfig.projectId;
+let firebaseServices: FirebaseServices | null = null;
 
-  if (!isFirebaseConfigValid) {
-    console.warn("Firebase client configuration is missing or incomplete. Firebase services will be unavailable.");
-    return null;
+export const getFirebaseServices = (): FirebaseServices => {
+  if (firebaseServices) {
+    return firebaseServices;
   }
 
-  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  let analytics: Analytics | null = null;
+  if (!getApps().length) {
+    if (!firebaseConfig.apiKey) {
+        throw new Error('Firebase client configuration is missing or incomplete. Check your .env.local file.');
+    }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let analytics = null;
+    if (typeof window !== 'undefined' && isSupported()) {
+        analytics = getAnalytics(app);
+    }
+    firebaseServices = { app, auth, db, analytics };
+  } else {
+    const app = getApp();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let analytics = null;
+    if (typeof window !== 'undefined' && isSupported()) {
+        analytics = getAnalytics(app);
+    }
+    firebaseServices = { app, auth, db, analytics };
+  }
   
-  isSupported().then(supported => {
-      if (supported) {
-          analytics = getAnalytics(app);
-      }
-  });
+  return firebaseServices;
+};
 
-  return { app, auth, db, analytics };
-}
-
-// We still export the individual services for any legacy imports,
-// but the new preferred way is via getFirebase().
-const services = getFirebase();
-export const app = services?.app;
-export const auth = services?.auth;
-export const db = services?.db;
-export const analytics = services?.analytics;
+// You can also export the individual services if you prefer
+export const firebaseApp = getFirebaseServices().app;
+export const auth = getFirebaseServices().auth;
+export const db = getFirebaseServices().db;
+export const analytics = getFirebaseServices().analytics;
