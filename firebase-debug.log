@@ -175,3 +175,87 @@ Before we get started, keep in mind:
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [debug] [2025-10-19T10:50:10.880Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
 [debug] [2025-10-19T10:50:10.880Z] > authorizing via signed-in user (ezz@entrestate.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-19T12:53:10.088Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:10.102Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:10.103Z] > refreshing access token with scopes: []
+[debug] [2025-10-19T12:53:10.189Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-19T12:53:10.204Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:10.975Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:10.976Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:10.976Z] > refreshing access token with scopes: []
+[debug] [2025-10-19T12:53:10.977Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-19T12:53:10.978Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:10.987Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:10.988Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:10.988Z] > refreshing access token with scopes: []
+[debug] [2025-10-19T12:53:10.993Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-19T12:53:10.994Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:11.001Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:11.001Z] Checked if tokens are valid: false, expires at: 1760872045402
+[debug] [2025-10-19T12:53:11.002Z] > refreshing access token with scopes: []
+[debug] [2025-10-19T12:53:11.002Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-19T12:53:11.002Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:11.707Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-19T12:53:11.710Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:11.771Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ [none]
+[debug] [2025-10-19T12:53:11.772Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-19T12:53:11.800Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-19T12:53:11.801Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:11.828Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com [none]
+[debug] [2025-10-19T12:53:11.828Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-19T12:53:11.855Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-19T12:53:11.856Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:11.877Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-19T12:53:11.877Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-19T12:53:11.945Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-19T12:53:11.948Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-19T12:53:11.974Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com [none]
+[debug] [2025-10-19T12:53:11.975Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com x-goog-quota-user=projects/entrestate-ecosystem
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-19T12:53:12.159Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.166Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.180Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.181Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.185Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.189Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.194Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.194Z] Checked if tokens are valid: true, expires at: 1760881990948
+[debug] [2025-10-19T12:53:12.196Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ [none]
+[debug] [2025-10-19T12:53:12.196Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-19T12:53:12.209Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-19T12:53:12.213Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-19T12:53:12.227Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com [none]
+[debug] [2025-10-19T12:53:12.228Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-19T12:53:12.235Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com [none]
+[debug] [2025-10-19T12:53:12.236Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com x-goog-quota-user=projects/entrestate-ecosystem
+[debug] [2025-10-19T12:53:12.730Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com 403
+[debug] [2025-10-19T12:53:12.730Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com [omitted]
+[debug] [2025-10-19T12:53:12.812Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-19T12:53:12.815Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-19T12:53:12.840Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com 200
+[debug] [2025-10-19T12:53:12.841Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com [omitted]
+[debug] [2025-10-19T12:53:12.912Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ 200
+[debug] [2025-10-19T12:53:12.914Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ [omitted]
+[debug] [2025-10-19T12:53:12.957Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com 200
+[debug] [2025-10-19T12:53:12.958Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasecrashlytics.googleapis.com [omitted]
+[debug] [2025-10-19T12:53:13.308Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com 403
+[debug] [2025-10-19T12:53:13.313Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebaseio.com [omitted]
+[debug] [2025-10-19T12:53:13.353Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-19T12:53:13.353Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-19T12:53:13.699Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ 200
+[debug] [2025-10-19T12:53:13.719Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/entrestate-ecosystem/services/ [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-19T12:53:13.876Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-19T12:53:13.885Z] > authorizing via signed-in user (ezz@entrestate.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-19T12:53:14.648Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-19T12:53:14.648Z] > authorizing via signed-in user (ezz@entrestate.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-19T12:53:14.676Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-19T12:53:14.676Z] > authorizing via signed-in user (ezz@entrestate.com)
