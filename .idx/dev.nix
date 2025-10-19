@@ -6,7 +6,7 @@
   packages = [
     pkgs.nodejs_20
     pkgs.nodePackages.npm
-    pkgs.pnpm # Add pnpm for shadcn-ui
+    pkgs.pnpm
     pkgs.chromium
     pkgs.firebase-tools
   ];

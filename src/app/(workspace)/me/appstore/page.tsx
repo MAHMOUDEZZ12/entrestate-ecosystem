@@ -4,23 +4,17 @@
 import { PageHeader } from "@/components/ui/page-header";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Sparkles } from "lucide-react";
+import { CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-
-// In a real app, this would be filtered based on the user's subscription tier
-const suites = [
-    { id: "lead-intelligence", name: "Lead Intelligence Suite", description: "Your AI Co-pilot for converting leads into deals.", active: true },
-    { id: "listing-intelligence", name: "Listing Intelligence Dashboard", description: "Your AI Co-pilot for optimizing your property listings.", active: true },
-    { id: "meta-intelligence", name: "Meta Intelligence Suite", description: "Your AI Co-pilot for creating and managing ad campaigns.", active: true },
-    { id: "creative-intelligence", name: "Creative Intelligence Suite", description: "Your AI Co-pilot for generating marketing assets.", active: false },
-    { id: "super-seller-suite", name: "SuperSellerSuite", description: "Your AI Co-pilot for closing deals.", active: false },
-    { id: "cloud-intelligence", name: "Cloud Intelligence Suite", description: "Your AI Co-pilot for building custom solutions.", active: false },
-];
+import { suites } from '@/lib/tools-data'; // Using the centralized data source
+import React from "react";
 
 export default function AppstorePage() {
+    // In a real app, this 'active' status would come from the user's profile
+    const [activatedSuites, setActivatedSuites] = React.useState(["lead-intelligence", "listing-intelligence", "meta-intelligence"]);
+
     return (
         <div className="p-4 md:p-8">
             <PageHeader
@@ -32,7 +26,7 @@ export default function AppstorePage() {
                     <Card key={suite.id} className="flex flex-col justify-between">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
-                                <Sparkles className="h-5 w-5 text-primary" />
+                                {React.cloneElement(suite.icon as React.ReactElement, { className: 'h-6 w-6 text-primary' })}
                                 {suite.name}
                             </CardTitle>
                             <CardDescription>{suite.description}</CardDescription>
@@ -46,8 +40,8 @@ export default function AppstorePage() {
                         </CardContent>
                         <CardFooter>
                             <div className="flex items-center space-x-2">
-                                <Switch id={`suite-${suite.id}`} checked={suite.active} />
-                                <Label htmlFor={`suite-${suite.id}`}>{suite.active ? "Activated" : "Activate"}</Label>
+                                <Switch id={`suite-${suite.id}`} checked={activatedSuites.includes(suite.id)} />
+                                <Label htmlFor={`suite-${suite.id}`}>{activatedSuites.includes(suite.id) ? "Activated" : "Activate"}</Label>
                             </div>
                         </CardFooter>
                     </Card>

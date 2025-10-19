@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export default function CreateCampaignPage() {
     const [step, setStep] = useState(1);
-    const [campaignData, setCampaignData]_useState<any>({});
+    const [campaignData, setCampaignData] = useState<any>({});
     const [marketAnalysis, setMarketAnalysis] = useState<any>(null);
     const [loading, setLoading] = useState(false);
 
@@ -46,8 +46,10 @@ export default function CreateCampaignPage() {
 
     const handleCampaignCreate = (campaign: any) => {
         console.log("Campaign created:", campaign);
-        // Redirect back to the dashboard
-        window.location.href = "/me/meta-intelligence";
+        // Reset the process
+        setStep(1);
+        setCampaignData({});
+        setMarketAnalysis(null);
     };
 
     return (

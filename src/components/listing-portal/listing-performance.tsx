@@ -24,9 +24,8 @@ export function ListingPerformance() {
                 market: { name: 'Dubai' },
             });
             setPerformance(result);
-        } catch (error)
+        } catch (error) {
             console.error('Error tracking listing performance:', error);
-            // Handle the error appropriately in the UI
         } finally {
             setLoading(false);
         }

@@ -19,11 +19,11 @@ export default function MarketplacePage() {
                 <div className="container mx-auto px-4 md:px-8 py-12">
                      <div className="grid md:grid-cols-3 gap-8 items-stretch">
                         {pricingTiers.map(tier => (
-                            <Card key={tier.name} className={`flex flex-col ${tier.name === 'Agency' ? 'border-primary shadow-lg' : ''}`}>
+                            <Card key={tier.name} className={`flex flex-col ${tier.name === 'Agency' ? 'border-primary shadow-lg ring-2 ring-primary' : ''}`}>
                                 <CardHeader>
-                                    <CardTitle className="text-xl">{tier.name}</CardTitle>
+                                    <CardTitle className="text-2xl font-bold">{tier.name}</CardTitle>
                                     <CardDescription>{tier.description}</CardDescription>
-                                    <p className="text-4xl font-bold pt-4">{tier.price} <span className="text-sm font-normal text-muted-foreground">{tier.name !== "Enterprise" && "/ month"}</span></p>
+                                    <p className="text-5xl font-bold pt-4">{tier.price} <span className="text-lg font-normal text-muted-foreground">{tier.name !== "Enterprise" && "/ month"}</span></p>
                                 </CardHeader>
                                 <CardContent className="flex-grow">
                                     <ul className="space-y-3">

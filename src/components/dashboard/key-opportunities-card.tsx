@@ -35,7 +35,7 @@ export function KeyOpportunitiesCard() {
         <Card>
             <CardHeader>
                 <CardTitle>Key Opportunities</CardTitle>
-            </-header>
+            </CardHeader>
             <CardContent>
                 {loading ? (
                     <p>Loading opportunities...</p>
