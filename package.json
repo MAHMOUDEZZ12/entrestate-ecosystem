@@ -1,3 +1,4 @@
+
 {
   "name": "nextn",
   "version": "0.1.0",
@@ -68,6 +69,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "react-markdown": "^9.0.1",
+    "react-resizable-panels": "^2.0.19",
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
@@ -87,5 +89,5 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
+  "packageManager": "npm@10.8.1"
 }

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Bot } from 'lucide-react';
 
-export function MasterFooter() {
+export function PublicFooter() {
   return (
     <footer className="bg-muted/20 border-t">
       <div className="container mx-auto px-4 md:px-8 py-12 text-center text-xs text-muted-foreground">

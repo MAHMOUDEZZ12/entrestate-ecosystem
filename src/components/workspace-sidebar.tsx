@@ -25,7 +25,8 @@ import {
   Briefcase,
   Users,
   Server,
-  CreditCard, // Import the CreditCard icon for Billing
+  CreditCard,
+  MessageSquare, // Import the MessageSquare icon for WhatsMAP
 } from 'lucide-react';
 import {
   Tooltip,
@@ -62,7 +63,6 @@ export function WorkspaceSidebar() {
 
     const iconWithOptionalSparkles = (
       <div className="relative">
-        {displayedIcon}
         {hasSparkles && <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-accent" />}
       </div>
     );
@@ -78,7 +78,7 @@ export function WorkspaceSidebar() {
                   isActive ? "bg-primary text-primary-foreground hover:bg-primary/90" : "text-muted-foreground"
                 )}
               >
-                {iconWithOptionalSparkles}
+                {displayedIcon}
                 <span className="sr-only">{label}</span>
               </div>
             </Link>
@@ -94,6 +94,8 @@ export function WorkspaceSidebar() {
       <div className="flex h-full max-h-screen flex-col gap-4 p-3">
         <nav className="flex flex-col items-center gap-3">
             <NavLink href="/me/ei-os" label="Main Dashboard" icon={<LayoutDashboard />} hasSparkles={true} />
+            <Separator />
+            <NavLink href="/me/whatsmap" label="WhatsMAP Command Center" icon={<MessageSquare />} hasSparkles={true} />
             <Separator />
             {sidebarLinks.map(link => <NavLink key={link.href} {...link} />)}
         </nav>

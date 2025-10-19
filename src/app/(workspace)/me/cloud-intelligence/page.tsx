@@ -8,6 +8,10 @@ import { MegaListingAgentDashboard } from "@/components/cloud-intelligence/mega-
 import { DataSegmentationDashboard } from "@/components/cloud-intelligence/data-segmentation-dashboard";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function CloudIntelligencePage() {
   return (
@@ -45,6 +49,20 @@ export default function CloudIntelligencePage() {
             </Tabs>
         </div>
         
+        <Card className="mt-12 text-center">
+            <CardHeader>
+                <CardTitle>Ready to Build?</CardTitle>
+                <CardDescription>Explore our developer documentation to start building your own next-generation real estate applications on the Entrestate Cloud.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Link href="/developers">
+                    <Button size="lg">
+                        Go to Developer Portal <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                </Link>
+            </CardContent>
+        </Card>
+
       </main>
     </div>
   );

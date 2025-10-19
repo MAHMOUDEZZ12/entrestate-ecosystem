@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { generateSuiteDescription } from "@/ai/flows/marketplace/generate-suite-description";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Sparkles, ShoppingCart } from "lucide-react";
+import { CheckCircle, Sparkles } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";

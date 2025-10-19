@@ -3,7 +3,7 @@
 
 import { MasterHeader } from '@/components/master-header';
 import { MasterFooter } from '@/components/master-footer';
-import DiscoverPage from './discover/page'; // We will use the discover page as the new homepage
+import DiscoverPage from './(public)/discover/page'; // Corrected import path
 
 export default function HomePage() {
   return (

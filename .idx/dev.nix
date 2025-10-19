@@ -6,6 +6,7 @@
   packages = [
     pkgs.nodejs_20
     pkgs.nodePackages.npm
+    pkgs.pnpm # Add pnpm for shadcn-ui
     pkgs.chromium
     pkgs.firebase-tools
   ];
@@ -24,11 +25,11 @@
       enable = true;
       previews = {
         web = {
-          command = ["npm" "run" "dev" "--" "--port" "$PORT" "--hostname" "0.0.0.0"];
+          command = ["npm" "run" "dev" "--" "--port" "$PORT"]; "--hostname"= "0.0.0.0";};};
           manager = "web";
         };
       };
-    };
+    }
     workspace = {
       onCreate = {
         "npm-install" = "npm ci";

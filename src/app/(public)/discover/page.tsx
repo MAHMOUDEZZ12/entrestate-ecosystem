@@ -46,7 +46,7 @@ export default function DiscoverPage() {
                         {component.data.projects.map((project: Project) => (
                             <Card key={project.id}>
                                 <CardContent className="p-3">
-                                    <Image src={project.thumbnailUrl} alt={project.name} width={300} height={200} className="rounded-lg mb-2" />
+                                    <Image src={project.thumbnailUrl} alt={project.name} width={30_0} height={200} className="rounded-lg mb-2" />
                                     <h4 className="font-semibold text-sm">{project.name}</h4>
                                     <p className="text-xs text-muted-foreground">{project.developer}</p>
                                 </CardContent>
