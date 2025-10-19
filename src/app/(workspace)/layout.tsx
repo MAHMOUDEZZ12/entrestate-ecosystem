@@ -1,4 +1,4 @@
-H
+
 'use client';
 
 import { WorkspaceSidebar } from "@/components/workspace-sidebar";
