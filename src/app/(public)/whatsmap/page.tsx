@@ -5,7 +5,6 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Bot, BrainCircuit, Network, Gem, ArrowRight, CheckCircle } from "lucide-react";
-import { PublicWhatsMAPChat } from "@/components/public-whatsmap-chat";
 
 export default function WhatsMAPPage() {
   return (

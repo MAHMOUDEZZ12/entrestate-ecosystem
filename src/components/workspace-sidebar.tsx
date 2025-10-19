@@ -24,7 +24,8 @@ import {
   Palette,
   Briefcase,
   Users,
-  Server, // Import the Server icon for the Cloud Intelligence Suite
+  Server,
+  CreditCard, // Import the CreditCard icon for Billing
 } from 'lucide-react';
 import {
   Tooltip,
@@ -33,43 +34,36 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-// Add a 'hasSparkles' property to explicitly control sparkle display
 const sidebarLinks = [
-  { href: '/me/workspace', label: 'AI Dashboard', icon: <LayoutDashboard />, hasSparkles: true },
   { href: '/me/dashboard', label: 'Cloud Dashboard', icon: <Cloud />, hasSparkles: true },
-  { href: '/me/listing-portal', label: 'Listing Portal', icon: <List />, hasSparkles: true },
+  { href: '/me/listing-portal', label: 'Listing Intelligence', icon: <List />, hasSparkles: true },
   { href: '/me/meta-intelligence', label: 'Meta Intelligence', icon: <Facebook />, hasSparkles: true },
-  { href: '/me/creative-hub', label: 'Creative Hub', icon: <Palette />, hasSparkles: true },
-  { href: '/me/super-seller-suite', label: 'Super Seller Suite', icon: <Briefcase />, hasSparkles: true },
+  { href: '/me/creative-hub', label: 'Creative Intelligence', icon: <Palette />, hasSparkles: true },
+  { href: '/me/super-seller-suite', label: 'SuperSellerSuite', icon: <Briefcase />, hasSparkles: true },
   { href: '/me/lead-intelligence', label: 'Lead Intelligence', icon: <Users />, hasSparkles: true },
-  { href: '/me/cloud-intelligence', label: 'Cloud Intelligence', icon: <Server />, hasSparkles: true },
-  { href: '/me/marketplace', label: 'AI Apps', icon: <Compass />, hasSparkles: true },
-  { href: '/me/flows', label: 'AI Flow Builder', icon: <Workflow />, hasSparkles: true },
-  { href: '/me/brand', label: 'Brand & Assets', icon: <FolderCog /> },
-  { href: '/me/tool/projects-finder', label: 'AI Market Library', icon: <Building />, hasSparkles: true },
-  { href: '/me/community', label: 'Community Hub', icon: <Users2 /> },
-  { href: 'g/me/daily-motivation', label: 'Daily Motivation', icon: <Lightbulb /> },
+  { href: '/me/cloud-intelligence', label: 'Cloud Agents', icon: <Server />, hasSparkles: true },
+  { href: '/appstore', label: 'Appstore', icon: <Compass />, hasSparkles: true },
+  { href: '/flows', label: 'Flow Builder', icon: <Workflow />, hasSparkles: true },
 ];
 
 const bottomLinks = [
-  { href: '/me/assistant', label: 'Gemini Assistant', icon: <Bot />, hasSparkles: true },
+  { href: '/me/billing', label: 'Billing & Subscriptions', icon: <CreditCard /> },
   { href: '/me/settings', label: 'Settings', icon: <Settings /> },
+  { href: '/me/community', label: 'Community Hub', icon: <Users2 /> },
 ];
 
 export function WorkspaceSidebar() {
   const pathname = usePathname();
 
   const NavLink = ({ href, label, icon, hasSparkles }: { href: string, label: string, icon: React.ReactNode, hasSparkles?: boolean }) => {
-    const isActive = pathname.startsWith(href) && (href !== '/me/workspace' || pathname === '/me/workspace');
+    const isActive = pathname.startsWith(href) && (href !== '/me' || pathname === '/me');
 
     const displayedIcon = React.cloneElement(icon as React.ReactElement, { className: 'h-5 w-5' });
 
     const iconWithOptionalSparkles = (
       <div className="relative">
         {displayedIcon}
-        {hasSparkles && (
-          <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-accent" />
-        )}
+        {hasSparkles && <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-accent" />}
       </div>
     );
 
@@ -77,7 +71,7 @@ export function WorkspaceSidebar() {
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link href={href} title={label}> {/* Added title for accessibility */}
+            <Link href={href} title={label}>
               <div
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-muted",
@@ -89,9 +83,7 @@ export function WorkspaceSidebar() {
               </div>
             </Link>
           </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{label}</p>
-          </TooltipContent>
+          <TooltipContent side="right"><p>{label}</p></TooltipContent>
         </Tooltip>
       </TooltipProvider>
     );
@@ -101,14 +93,13 @@ export function WorkspaceSidebar() {
     <aside className="hidden border-r bg-background sm:flex z-20">
       <div className="flex h-full max-h-screen flex-col gap-4 p-3">
         <nav className="flex flex-col items-center gap-3">
-          {sidebarLinks.map(link => (
-            <NavLink key={link.href} {...link} />
-          ))}
+            <NavLink href="/me/ei-os" label="Main Dashboard" icon={<LayoutDashboard />} hasSparkles={true} />
+            <Separator />
+            {sidebarLinks.map(link => <NavLink key={link.href} {...link} />)}
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-3">
-          {bottomLinks.map(link => (
-            <NavLink key={link.href} {...link} />
-          ))}
+            <Separator />
+            {bottomLinks.map(link => <NavLink key={link.href} {...link} />)}
         </nav>
       </div>
     </aside>

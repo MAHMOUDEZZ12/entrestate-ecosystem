@@ -10,6 +10,7 @@ import { runSalesPilot } from '@/ai/flows/lead-intelligence/sales-pilot';
 import { generateMarketingKit } from '@/ai/flows/super-seller-suite/generate-marketing-kit';
 import { verifyListing } from '@/ai/flows/listing-crm/verify-listing';
 import { getMarketTrends } from '@/ai/flows/market-intelligence/get-market-trends';
+import { launchMeta } from '@/../functions/src/steps/launchMeta'; // Import the new flow
 
 // Define a map from a string identifier to the actual flow function
 const flowRunnerMap: Record<string, (params: any) => Promise<any>> = {
@@ -20,6 +21,7 @@ const flowRunnerMap: Record<string, (params: any) => Promise<any>> = {
     'generate-marketing-kit': generateMarketingKit,
     'verify-listing': verifyListing,
     'get-market-trends': getMarketTrends,
+    'launch-meta-campaign': launchMeta, // Register the new flow
 };
 
 const RunRequestSchema = z.object({

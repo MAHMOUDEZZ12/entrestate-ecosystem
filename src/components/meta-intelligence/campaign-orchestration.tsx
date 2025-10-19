@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { createMetaCampaign } from "@/ai/flows/meta-pilot/create-meta-campaign";
+import { runFlow } from "@/lib/tools-client"; // Use the new client
 import { useState } from "react";
 
 export function CampaignOrchestration({ campaignData, onCampaignCreate }: { campaignData: any, onCampaignCreate: (campaign: any) => void }) {
@@ -13,9 +13,9 @@ export function CampaignOrchestration({ campaignData, onCampaignCreate }: { camp
     const handleCreateCampaign = async () => {
         setLoading(true);
         try {
-            const result = await createMetaCampaign({
-                ...campaignData,
-                // The market analysis will be passed in from the main page
+            // Use the runFlow client to call the backend
+            const result = await runFlow('launch-meta-campaign', {
+                ...campaignData
             });
             setCampaign(result);
         } catch (error) {
@@ -64,6 +64,7 @@ export function CampaignOrchestration({ campaignData, onCampaignCreate }: { camp
                                 ))}
                             </div>
                             <p className="text-sm mt-2"><strong>Optimization Advice:</strong> {campaign.optimizationAdvice}</p>
+                            <p className="text-sm mt-2"><strong>Campaign ID:</strong> {campaign.id}</p>
                         </div>
                     </div>
                 )}

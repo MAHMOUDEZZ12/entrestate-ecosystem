@@ -73,7 +73,7 @@ export default function AppstorePage() {
                     <Button className="w-full" disabled={suite.activated}>
                         {suite.activated ? <><CheckCircle className="h-5 w-5 mr-2" /> Activated</> : 'Activate Suite'}
                     </Button>
-                    <Link href={`/appstore/${suite.id}`} className="w-full">
+                    <Link href={`/solutions/${suite.id}`} className="w-full">
                         <Button variant="outline" className="w-full">View Details</Button>
                     </Link>
                 </CardFooter>
