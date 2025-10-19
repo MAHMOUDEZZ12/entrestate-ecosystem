@@ -6,49 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Check, Sparkles, ArrowRight } from "lucide-react";
-
-const pricingTiers = [
-    {
-        name: "Pro Agent",
-        price: "$99",
-        description: "For the ambitious agent who needs an AI-powered co-pilot.",
-        features: [
-            "Lead Intelligence Suite",
-            "Listing Intelligence Dashboard",
-            "Meta Intelligence Suite",
-            "500,000 AI Tokens/month",
-            "Community Hub Access",
-        ],
-        cta: "Get Started with Pro"
-    },
-    {
-        name: "Agency",
-        price: "$299",
-        description: "For teams who need to collaborate and scale their operations.",
-        features: [
-            "All Pro Agent features",
-            "Creative Intelligence Suite",
-            "SuperSellerSuite",
-            "2,000,000 AI Tokens/month",
-            "Team Collaboration (3 Seats)",
-            "Advanced Reporting",
-        ],
-        cta: "Choose Agency"
-    },
-    {
-        name: "Enterprise",
-        price: "Contact Us",
-        description: "For market leaders who need unlimited power and dedicated support.",
-        features: [
-            "All Agency features",
-            "Cloud Intelligence Suite (API Access)",
-            "Unlimited AI Tokens",
-            "Dedicated Support & Onboarding",
-            "Custom Integrations",
-        ],
-        cta: "Contact Sales"
-    }
-];
+import { pricingTiers } from '@/lib/tools-data';
 
 export default function MarketplacePage() {
     return (
