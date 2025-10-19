@@ -2,6 +2,8 @@
 
 'use client';
 
+import React, 'use client';
+
 import React, { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/ui/page-header';
 import { LayoutGrid, Search } from 'lucide-react';
